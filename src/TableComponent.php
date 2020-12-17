@@ -24,6 +24,7 @@ class TableComponent extends Component
     public $checkbox_values = [];
     public $sort_attribute = 'id';
     public $sort_direction = 'desc';
+    public $pagination = true;
     public $per_page;
 
     public function mount()
@@ -45,10 +46,19 @@ class TableComponent extends Component
 
     public function tableView()
     {
-        return view('laravel-livewire-tables::table', [
-            'columns' => $this->columns(),
-            'models' => $this->models()->paginate($this->per_page),
-        ]);
+        if($this->pagination) {
+            return view('laravel-livewire-tables::table', [
+                'columns' => $this->columns(),
+                'models' => $this->models()->paginate($this->per_page, ['*'], $this->page_name),
+            ]);            
+        }
+        else {
+            return view('laravel-livewire-tables::table', [
+                'columns' => $this->columns(),
+                'models' => $this->models()->get(),
+                'pagination' => false,
+            ]);
+        }
     }
 
     public function query()
