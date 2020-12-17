@@ -83,9 +83,11 @@
     </div>
 
     <div class="row justify-content-between">
-        <div class="col-auto">
-            {{ $models->links() }}
-        </div>
+        @if($pagination)
+            <div class="col-auto">
+                {{ $models->links() }}
+            </div>
+        @endif
         @if($footer_view)
             <div class="col-md-auto">
                 @include($footer_view)
